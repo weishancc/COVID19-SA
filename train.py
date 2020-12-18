@@ -14,10 +14,10 @@ def train_epoch(model, data_loader, device):
         optimizer.zero_grad()
              
         # Forwarding, ouputs: (loss), (logits), (hidden_states), (attentions)
-        outputs = model(input_ids = tokens_tensors, 
-                        token_type_ids = segments_tensors, 
-                        attention_mask = masks_tensors,
-                        labels = labels)
+        outputs = model(input_ids=tokens_tensors, 
+                        token_type_ids=segments_tensors, 
+                        attention_mask=masks_tensors,
+                        labels=labels)
         loss = outputs[0]
         train_loss += loss.item()
         loss.backward()
@@ -40,10 +40,10 @@ def eval_epoch(model, data_loader, device):
             tokens_tensors, segments_tensors, masks_tensors, labels = [t.to(device) for t in data]
             
             # Forwarding, ouput: (loss), (logits), (hidden_states), (attentions)
-            outputs = model(input_ids = tokens_tensors, 
-                            token_type_ids = segments_tensors, 
-                            attention_mask = masks_tensors, 
-                            labels = labels)
+            outputs = model(input_ids=tokens_tensors, 
+                            token_type_ids=segments_tensors, 
+                            attention_mask=masks_tensors, 
+                            labels=labels)
             loss = outputs[0]
             val_loss += loss.item()
         

@@ -26,12 +26,12 @@ df_test, map_en = preprocessing.preprocess(test_file)
 
 # Load bert model and tokenizer
 PRETRAINED_MODEL_NAME = 'bert-base-uncased'
-tokenizer = BertTokenizer.from_pretrained(PRETRAINED_MODEL_NAME, do_lower_case = True)
+tokenizer = BertTokenizer.from_pretrained(PRETRAINED_MODEL_NAME, do_lower_case=True)
 
 
 # Self define Covid-train-Dataset and check the first sample
 # i.e., converted (tokens_tensor, segments_tensor, label_tensor)
-train_set = CovidDataset(df_train, tokenizer = tokenizer)
+train_set = CovidDataset(df_train, tokenizer=tokenizer)
 label, text = train_set.df.iloc[0].values
 tokens_tensor, segments_tensor, label_tensor = train_set[0]
 
@@ -63,9 +63,9 @@ label_tensor   ：{label_tensor}
 # DataLoader returned 64 samples at a time,
 # "collate_fn" parameter defined the batch output
 BATCH_SIZE = 64
-train_set, val_set = train_test_split(train_set, test_size = 0.1, random_state = 2000)
-train_loader = DataLoader(train_set, batch_size=BATCH_SIZE, collate_fn = batch.create_mini_batch)
-val_loader = DataLoader(val_set, batch_size=BATCH_SIZE, collate_fn = batch.create_mini_batch)
+train_set, val_set = train_test_split(train_set, test_size=0.1, random_state=2000)
+train_loader = DataLoader(train_set, batch_size=BATCH_SIZE, collate_fn=batch.create_mini_batch)
+val_loader = DataLoader(val_set, batch_size=BATCH_SIZE, collate_fn=batch.create_mini_batch)
 data = next(iter(train_loader))
 tokens_tensors, segments_tensors, masks_tensors, label_ids = data
 
@@ -86,7 +86,7 @@ label_ids.shape = {label_ids.shape}
 
 # Fine-tune task is "BertForSequenceClassification"
 model = BertForSequenceClassification.from_pretrained(
-    PRETRAINED_MODEL_NAME, num_labels = 4)
+    PRETRAINED_MODEL_NAME, num_labels=4)
 
 
 # Numbers of parameters
@@ -114,7 +114,7 @@ for epoch in range(EPOCHS):
 
     # Training
     train_acc, train_loss = train.train_epoch(model, train_loader, device)
-    print(f"{epoch + 1:^7} | {train_loss:^12.6f} | {train_acc:^15.2f}", end = '')     
+    print(f"{epoch + 1:^7} | {train_loss:^12.6f} | {train_acc:^15.2f}", end='')     
     
     # Evaluating
     val_acc, val_loss = train.eval_epoch(model, val_loader, device)
@@ -155,16 +155,16 @@ plt.grid()
 plt.savefig('loss_history.png')
 
 # Inference with test set
-test_set = CovidDataset(df_test, tokenizer = tokenizer)
-test_loader = DataLoader(test_set, batch_size = 256, 
-                        collate_fn = batch.create_mini_batch)
+test_set = CovidDataset(df_test, tokenizer=tokenizer)
+test_loader = DataLoader(test_set, batch_size=256, 
+                        collate_fn=batch.create_mini_batch)
 predictions = predict.get_predictions(model, test_loader, device)   ### Currently have a bug here, why prediction get tuple wite 2 same predicted results?
 
 
 # Concat predition to .csv
 df_pred = df_test
 df_pred['prediction'] = predictions[0].tolist()
-df_pred.to_csv('predict.csv', index = False)
+df_pred.to_csv('predict.csv', index=False)
 
 
 # Predict with a single sentence
