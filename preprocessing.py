@@ -1,28 +1,30 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
+import re
+import string
+from sklearn.preprocessing import LabelEncoder
 
-def preprocess(filepath, mode):
-    assert mode in ['train', 'test']
+def preprocess(filepath): 
+    # Read file and encode "sentiment"
+    df = pd.read_csv(filepath, usecols = ['sentiment', 'text'])
+    lb = LabelEncoder()
+    lb.fit(df['sentiment'])
+    # print(list(lb.classes_))
+    df['sentiment']= lb.fit_transform(df['sentiment'])
     
-    df = pd.read_csv(filepath)
-    if mode == 'train':
-        # sample 10% of data and not duplicate
-        df_train = df.sample(frac = 0.01, random_state = None)
-        
-        #Select useful columns
-        df_train = df_train.loc[:, ['title1_en', 'label']]
-        df_train.rename(columns = {'title1_en':'Comment'}, inplace = True)
-        
-        # Map label and save tsv
-        label_map = {'agreed': 0, 'disagreed': 1, 'unrelated': 2}
-        df_train = df_train.replace({'label': label_map})
-        df_train.to_csv('train.tsv', sep = '\t', index = False)     
-        return df_train
-    else:
-        df_test = df.sample(frac = 0.01, random_state = None)
-        df_test = df_test.loc[:, ['title1_en']]
-        df_test.rename(columns = {'title1_en':'Comment'}, inplace = True)
-        df_test.to_csv('test.tsv', sep = '\t', index = False) 
-        return df_test   
-    return None
+    # Make "text" more clean
+    df['text'] = df['text'].apply(lambda x : clean_text(x))
+    
+    # Save the dict that map text and encoding
+    map_en = dict(enumerate(list(lb.classes_)))
+    return df, map_en
+
+def clean_text(text):
+    text = re.sub('\[.*?\]', '', text)
+    text = re.sub('https?://\S+|www\.\S+', '', text)
+    text = re.sub('<.*?>+', '', text)
+    text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
+    text = re.sub('\n', '', text)
+    text = re.sub('\w*\d\w*', '', text) 
+    return text
 

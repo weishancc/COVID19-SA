@@ -1,3 +1,8 @@
-# complete fake data
-/fake_data/test.csv
-/fake_data/train.csv
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Finetuned model
+best_model_state.bin
+
