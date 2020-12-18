@@ -6,7 +6,7 @@ import torch.nn as nn
 
 def train_epoch(model, data_loader, device):
     model.train()
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-6)    
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-6, weight_decay=0.01)    
     train_loss = 0.0    
 
     for data in data_loader:       

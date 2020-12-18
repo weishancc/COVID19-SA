@@ -6,3 +6,4 @@ __pycache__/
 # Finetuned model
 best_model_state.bin
 
+predict.csv *.png *.jpg

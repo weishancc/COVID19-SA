@@ -165,9 +165,3 @@ predictions = predict.get_predictions(model, test_loader, device)   ### Currentl
 df_pred = df_test
 df_pred['prediction'] = predictions[0].tolist()
 df_pred.to_csv('predict.csv', index=False)
-
-
-# Predict with a single sentence
-text = "COVID19!!"
-prediction = predict.get_prediction_with_single(tokenizer, model, text, device)
-print(map_en[prediction.item()])
