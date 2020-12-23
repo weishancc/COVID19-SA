@@ -7,3 +7,4 @@ __pycache__/
 best_model_state.bin
 
 predict.csv *.png *.jpg
+*.swp
