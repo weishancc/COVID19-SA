@@ -3,11 +3,13 @@ import torch
 import predict
 import numpy as np
 import torch.nn as nn
+from transformers import AdamW
 
 def train_epoch(model, data_loader, device):
     model.train()
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-6, weight_decay=0.01)    
+    #optimizer = torch.optim.AdamW(model.parameters(), lr=1e-6)    
     train_loss = 0.0    
+    optimizer = AdamW(model.parameters(), lr=1e-5)
 
     for data in data_loader:       
         tokens_tensors, segments_tensors, masks_tensors, labels = [t.to(device) for t in data]

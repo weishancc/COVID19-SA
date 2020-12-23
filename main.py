@@ -5,10 +5,9 @@ import train
 import predict
 import pandas as pd
 from matplotlib import pyplot as plt
-from transformers import BertTokenizer
 from covidDataset import CovidDataset
 from torch.utils.data import DataLoader
-from transformers import BertForSequenceClassification
+from transformers import BertForSequenceClassification, BertTokenizer
 from sklearn.model_selection import train_test_split
 from torch import device, cuda, save
 from collections import defaultdict
@@ -107,7 +106,7 @@ print('\n###Start training###\n')
 print(f"{'Epoch':^7} | {'Train loss':^12} | {'Train accuracy':^9} |{'Val loss':^12} | {'Val accuracy':^9} |")
 print("-" * 70)   
 
-EPOCHS = 100
+EPOCHS = 10
 history = defaultdict(list)
 for epoch in range(EPOCHS):   
     best_accuracy = 0
