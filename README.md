@@ -22,7 +22,7 @@ $ python main.py
 When training complete, [main.py](https://github.com/weishancc/COVID19-SA/blob/master/main.py) will save accuracy and loss history(training/validate), then we provide two functions in [predict.py](https://github.com/weishancc/COVID19-SA/blob/master/predict.py) to get inference (**get_predictions** / **get_prediction_with_single**). This step will infernece from test dataloader using function ```get_predictions```, where live-demo will inference from web's input in live-demo using function ```get_prediction_with_single```.
 
 ### Live-demo
-We use flask as web server, and interact with web client via ajax. Due to file size limit, we place fine-tuned model weight [here](https://drive.google.com/file/d/1I_xkkdHJxrUhFlfXIl9VMpGUWnsflaVc/view?usp=sharing), of course, you can change to your weight under folder [web_demo](https://github.com/weishancc/COVID19-SA/blob/master/web_demo)
+We use flask as web server, and interact with web client via ajax. Due to file size limit, we place fine-tuned model weight [here](https://drive.google.com/file/d/1G72u37FknxwUGKaEXo_rWiM8Ib6QNLFv/view), of course, you can change to your weight under folder [web_demo](https://github.com/weishancc/COVID19-SA/blob/master/web_demo)
 <p align="left"><img width=50% src="https://github.com/weishancc/COVID19-SA/blob/master/images/architecture.PNG"></p>
 
 #### Start web server
