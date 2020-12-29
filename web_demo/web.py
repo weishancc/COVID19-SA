@@ -27,7 +27,7 @@ def predict():
 
 # main
 if __name__ == "__main__":
-    os.environ['CUDA_VISIBLE_DEVICE'] = '4'
+    os.environ['CUDA_VISIBLE_DEVICE'] = '5'
 
     # Load bert model and tokenizer
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     state_dict = load(PRETRAINED_MODEL_NAME)
     model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=4, state_dict=state_dict)
     # Device
-    device = device('cuda:4' if cuda.is_available() else 'cpu')
+    device = device('cuda:5' if cuda.is_available() else 'cpu')
     print(device)
     model = model.to(device)
 

@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from torch import device, cuda, save
 from collections import defaultdict
 
-os.environ['CUDA_VISIBLE_DEVICE'] = '5'
+os.environ['CUDA_VISIBLE_DEVICE'] = '0'
 
 # Preprocess training data 
 train_file = os.path.join('./', 'TwitterPost', 'train.csv')
@@ -99,14 +99,14 @@ Parameters of linear classifier：{sum(p.numel() for p in clf_params)}
 
 
 ## Let's begin to train and fine-tune
-device = device('cuda:5' if cuda.is_available() else 'cpu')
+device = device('cuda:0' if cuda.is_available() else 'cpu')
 print('device:', device)
 model = model.to(device)
 print('\n###Start training###\n')
 print(f"{'Epoch':^7} | {'Train loss':^12} | {'Train accuracy':^9} |{'Val loss':^12} | {'Val accuracy':^9} |")
 print("-" * 70)   
 
-EPOCHS = 10
+EPOCHS = 4
 history = defaultdict(list)
 for epoch in range(EPOCHS):   
     best_accuracy = 0
