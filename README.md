@@ -27,7 +27,8 @@ We use flask as web server, and interact with web client via ajax. Due to file s
 
 #### Start web server
 ```console
-$ python main.py
+$ cd web_demo
+$ python web.py
 ```
 #### Then you will see the website on localhost:5000 :)
 We would like to add [bertviz](https://github.com/jessevig/bertviz) at first, but it seems unsupport on html for now.
